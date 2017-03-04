@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	template="/WEB-INF/plantillas/default.xhtml">
+	<ui:define name="content">
+		<div class="jumbotron">
+			<h1>Reserva de Entradas</h1>
+			<p>Aplicación Java EE7. Demuestra JPA 2.1 CDI 1.1 y JSF 2.2</p>
+		</div>
+		<ul class="nav nav-pills nav-stacked">
+			<li><h:link id="homeLink" outcome="/index.xhtml" value="Home" /></li>
+
+			<li><h:link outcome="/paginas/configurar" value="Configurar" /></li>
+			<li><h:link outcome="/paginas/comprar" value="Comprar Entrada" /></li>
+		</ul>
+	</ui:define>
+</ui:composition>

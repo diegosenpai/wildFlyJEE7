@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	template="/WEB-INF/plantillas/default.xhtml"
+	xmlns:p="http://xmlns.jcp.org/jsf/passthrough">
+
+	<ui:define name="content">
+
+		<div class="jumbotron">
+			<h1>Configuracion Asientos</h1>
+			<p>Ingrese la información de los Asientos</p>
+		</div>
+		<div class="row">
+			<div class="col-md-6">
+				<div class="panel panel-defaul">
+					<div class="panel-heading">
+						<h3 class="panel-title">Agregar Asientos</h3>
+					</div>
+					<div class="panel-body">
+
+						<h:form id="reg" role="form">
+							<div
+								class="form-group has-feedback #{!desc.valid? 'has-error':''}">
+								<h:outputLabel for="desc" value="Descripcion"
+									styleClass="control-label" />
+								<h:inputText id="desc" value="#{tipoAsientoNuevo.descripcion}"
+									p:placeholder="Ingrese una descripcion aqui"
+									class="form-control" binding="${desc}" />
+								<span
+									class="#{!desc.valid ? 'glyphicon glyphicon-remove form-control-feedback':''}" />
+								<h:message for="desc" errorClass="control-label has-error" />
+							</div>
+							<div
+								class="form-group #{!price.valid and facesContext.validationFailed? 'has-error':''}">
+								<h:outputLabel for="price" value="Precio"
+									styleClass="contro-label" />
+								<div class="input-group has-feedback">
+									<span class="input-group-addon">$</span>
+									<h:inputText id="price" value="#{tipoAsientoNuevo.precio}"
+										class="form-control" p:placeholder="Ingrese un precio"
+										binding="#{price}" />
+									<span
+										class="#{!price.valid? 'glyphicon glyphicon-remove input-group-feedback input-group-addon':''}" />
+								</div>
+								<h:message for="price" errorClass="control-label has-herror" />
+							</div>
+							<div
+								class="form-group has-feedback #{!cantidad.valid and facesContext.validationFailed? 'has-error':''}">
+								<h:outputLabel for="cantidad" value="Numero de Asientos"
+									styleClass="control-label" />
+
+								<h:inputText id="cantidad" value="#{tipoAsientoNuevo.cantidad}"
+									class="form-control" p:placeholder="Ingrese una cantidad"
+									binding="#{cantidad}" />
+								<span
+									class="#{!cantidad.valid? 'glyphicon glyphicon-remove form-control-feedback':''}" />
+								<h:message for="cantidad" errorClass="control-label has-error" />
+							</div>
+
+							<div class="form-group">
+								<h:outputLabel for="posicion" value="Posicion"
+									styleClass="control-label" />
+								<h:selectOneMenu value="#{tipoAsientoNuevo.posicion}"
+									id="posicion" class="form-control">
+									<f:selectItems value="#{theatreSetupService.seatPositions}"
+										var="pos" itemValue="#{pos}" itemLabel="#{pos.etiqueta}" />
+								</h:selectOneMenu>
+							</div>
+							<div class="form-group">
+								<h:commandButton id="btnAgregar"
+									action="#{theatreSetupService.agregarNuevosAsientos()}"
+									value="Añadir" styleClass="brn btn-primary" />
+							</div>
+							<h:messages styleClass="messages"
+								style="list-style: none; padding:0; margin:0;"
+								errorClass="alert alert-error" infoClass="alert alert-success"
+								warnClass="alert alert-warning" globalOnly="true" />
+						</h:form>
+
+					</div>
+				</div>
+			</div>
+
+			<div class="col-md-6">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						<h2 class="panel-title">Lista de Asientos</h2>
+					</div>
+					<div class="panel-body">
+						<h:form id="reg2">
+							<h:commandButton id="finalizar"
+								action="#{theatreSetupService.aplicarConfiguracion()}"
+								value="Finalizar Configuracion"
+								styleClass="btn btn-default btn-block" />
+						</h:form>
+					</div>
+					<h:panelGroup rendered="#{empty tiposAsiento}">
+						<em>No existen asientos.</em>
+					</h:panelGroup>
+					<h:dataTable var="tipoAsiento" value="#{tiposAsiento}"
+						rendered="#{not empty tiposAsiento}"
+						styleClass="table table-hover table-striped ">
+						<h:column>
+							<f:facet name="header">Id</f:facet>
+							#{tipoAsiento.id}
+						</h:column>
+						<h:column>
+							<f:facet name="header">Nombre</f:facet>
+							${tipoAsiento.descripcion}
+						</h:column>
+						<h:column>
+							<f:facet name="header">Posicion</f:facet>
+							${tipoAsiento.posicion.etiqueta}
+						</h:column>
+						<h:column>
+							<f:facet name="header">Precio</f:facet>
+						${tipoAsiento.precio}
+						</h:column>
+						<h:column>
+							<f:facet name="header">Cantidad</f:facet>
+							#{tipoAsiento.cantidad}
+						</h:column>
+
+
+					</h:dataTable>
+				</div>
+			</div>
+		</div>
+
+	</ui:define>
+
+</ui:composition>
