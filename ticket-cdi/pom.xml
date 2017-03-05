@@ -8,6 +8,7 @@
 	<properties>
 		<projec.build.sourceEncoding>UTF-8</projec.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<servidor.puerto.administracion>9990</servidor.puerto.administracion>
 	</properties>
 	<build>
 		<finalName>${project.artifactId}</finalName>
@@ -18,8 +19,16 @@
 				<version>1.0.2.Final</version>
 				<configuration>
 					<filename>${project.build.finalName}.war</filename>
-					<port>10095</port>
+					<port>${servidor.puerto.administracion}</port>
 				</configuration>
+				<executions>
+                    <execution>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>deploy</goal>
+                        </goals>
+                    </execution>
+                </executions>
 			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
