@@ -5,6 +5,7 @@ import java.util.concurrent.TimeUnit;
 
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
+import javax.annotation.security.RolesAllowed;
 import javax.ejb.AccessTimeout;
 import javax.ejb.AsyncResult;
 import javax.ejb.Asynchronous;
@@ -13,6 +14,7 @@ import javax.ejb.Remote;
 import javax.ejb.Remove;
 import javax.ejb.Stateful;
 
+import org.jboss.ejb3.annotation.SecurityDomain;
 import org.jboss.logging.Logger;
 
 import com.packtpub.wflydevelopment.chapter3.control.TheatreBox;
@@ -23,6 +25,8 @@ import com.packtpub.wflydevelopment.chapter3.exception.SeatBookedException;
 @Stateful
 @Remote(TheatreBookerRemote.class)
 @AccessTimeout(value = 5, unit = TimeUnit.MINUTES)
+@RolesAllowed("Manager")
+@SecurityDomain("dbdomain")
 public class TheatreBooker implements TheatreBookerRemote {
 
     private static final Logger logger = Logger.getLogger(TheatreBooker.class);
